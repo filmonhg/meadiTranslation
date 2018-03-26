@@ -13,6 +13,7 @@
         <module>Paginator</module>
         <module>TranslationSubmitter</module>
         <module>VoteSubmitter</module>
+        <module>MeadiParent</module>
     </modules>
 
 </project>

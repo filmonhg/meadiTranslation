@@ -27,7 +27,6 @@ public class NotifyMe implements RequestHandler<String,String> {
                 File usersFile = s3_util.downLoadFile(S3_Util.crowdSourceBucketKey, S3_Util.crowdSourceNotifyMeFileName, S3_Util.crowdSourceNotifyMeFileName);
 
                 List<String> notifyMeUsers = Files.readAllLines(Paths.get(usersFile.toURI()));
-
                 if (notifyMeUsers.contains(emailAddress)) {
 
                     return "User already saved";
