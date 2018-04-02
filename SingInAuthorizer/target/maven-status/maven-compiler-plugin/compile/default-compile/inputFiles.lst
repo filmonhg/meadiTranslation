@@ -1,6 +1,7 @@
-/Users/KOKOB/Documents/KobiDocuments/CrowdSourceTranslator/SingInAuthorizer/src/main/java/Model/SignInForm.java
-/Users/KOKOB/Documents/KobiDocuments/CrowdSourceTranslator/SingInAuthorizer/src/main/java/Model/SignUpForm.java
-/Users/KOKOB/Documents/KobiDocuments/CrowdSourceTranslator/SingInAuthorizer/src/main/java/NotifyMe.java
-/Users/KOKOB/Documents/KobiDocuments/CrowdSourceTranslator/SingInAuthorizer/src/main/java/SignIn.java
-/Users/KOKOB/Documents/KobiDocuments/CrowdSourceTranslator/SingInAuthorizer/src/main/java/Util/S3_Util.java
-/Users/KOKOB/Documents/KobiDocuments/CrowdSourceTranslator/SingInAuthorizer/src/main/java/SignUp.java
+/Users/filmonhg/Documents/meadiTranslation/SingInAuthorizer/src/main/java/Util/S3_Util.java
+/Users/filmonhg/Documents/meadiTranslation/SingInAuthorizer/src/main/java/Model/SignInForm.java
+/Users/filmonhg/Documents/meadiTranslation/SingInAuthorizer/src/main/java/SignUp.java
+/Users/filmonhg/Documents/meadiTranslation/SingInAuthorizer/src/main/java/Model/SignUpForm.java
+/Users/filmonhg/Documents/meadiTranslation/SingInAuthorizer/src/main/java/SignIn.java
+/Users/filmonhg/Documents/meadiTranslation/SingInAuthorizer/src/main/java/NotifyMe.java
+/Users/filmonhg/Documents/meadiTranslation/SingInAuthorizer/src/main/java/Util/NotifyMeDynamo.java

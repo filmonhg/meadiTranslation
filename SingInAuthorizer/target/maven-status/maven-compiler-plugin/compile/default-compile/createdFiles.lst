@@ -1,6 +1,7 @@
-Model/SignUpForm.class
 NotifyMe.class
+Util/NotifyMeDynamo.class
+Util/S3_Util.class
+Model/SignUpForm.class
 SignIn.class
 SignUp.class
-Util/S3_Util.class
 Model/SignInForm.class
