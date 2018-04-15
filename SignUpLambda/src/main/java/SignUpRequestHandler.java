@@ -31,6 +31,10 @@ public class SignUpRequestHandler implements RequestHandler<SignUpRequest,SignUp
                 .putItem(
                         new PutItemSpec().withItem(new Item()
                                 .withString("email",signUpRequest.getEmail())
+                                .withString("lastName",signUpRequest.getLastName())
+                                .withString("phone",signUpRequest.getPhone())
+                                .withString("password",signUpRequest.getPassword())
+                                .withBoolean("active",false)
                                 .withString("firstName", signUpRequest.getFirstName())));
                                // .withString("lastName", signUpRequest.getLastName())));
     }
