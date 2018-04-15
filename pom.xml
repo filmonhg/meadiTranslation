@@ -19,6 +19,7 @@
         <module>TranslationSubmitter</module>
         <module>VoteSubmitter</module>
         <module>MeadiParent</module>
+        <module>SignUpLambda</module>
     </modules>
 
 </project>
