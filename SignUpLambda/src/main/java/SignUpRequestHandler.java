@@ -11,7 +11,7 @@ import com.amazonaws.services.lambda.runtime.RequestHandler;
 
 public class SignUpRequestHandler implements RequestHandler<SignUpRequest,SignUpResponse>{
     private DynamoDB dynamoDb;
-    private String DYNAMODB_TABLE_NAME = "sign_up";
+    private String DYNAMODB_TABLE_NAME = "users";
     private Regions REGION = Regions.US_WEST_2;
 
     public SignUpResponse handleRequest(SignUpRequest signUpRequest, Context context) {
@@ -21,7 +21,7 @@ public class SignUpRequestHandler implements RequestHandler<SignUpRequest,SignUp
         persistData(signUpRequest);
 
         SignUpResponse signUpResponse = new SignUpResponse();
-        signUpResponse.setMessage("Saved Successfully!!!");
+        signUpResponse.setMessage("User Saved Successfully!!!");
         return signUpResponse;
     }
 
@@ -30,13 +30,14 @@ public class SignUpRequestHandler implements RequestHandler<SignUpRequest,SignUp
         return this.dynamoDb.getTable(DYNAMODB_TABLE_NAME)
                 .putItem(
                         new PutItemSpec().withItem(new Item()
+                                .withString("userId",signUpRequest.getPhone())
                                 .withString("email",signUpRequest.getEmail())
+                                .withString("firstName", signUpRequest.getFirstName())
                                 .withString("lastName",signUpRequest.getLastName())
                                 .withString("phone",signUpRequest.getPhone())
-                                .withString("password",signUpRequest.getPassword())
+                                .withString("address",signUpRequest.getAddress())
                                 .withBoolean("active",false)
-                                .withString("firstName", signUpRequest.getFirstName())));
-                               // .withString("lastName", signUpRequest.getLastName())));
+                                ));
     }
 
     private void initDynamoDbClient() {
