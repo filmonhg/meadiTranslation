@@ -1,9 +1,10 @@
 public class SignUpRequest {
+
     private String userId;
     private String email;
-    private String firstName;
-    private String lastName;
-    private String phone;
+    private String name;
+    private String family_name;
+    private String phone_number;
     private String address;
     private Boolean active;
 
@@ -23,28 +24,28 @@ public class SignUpRequest {
         this.email = email;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getName() {
+        return name;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getFamily_name() {
+        return family_name;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setFamily_name(String family_name) {
+        this.family_name = family_name;
     }
 
-    public String getPhone() {
-        return phone;
+    public String getPhone_number() {
+        return phone_number;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setPhone_number(String phone_number) {
+        this.phone_number = phone_number;
     }
 
     public String getAddress() {
@@ -68,9 +69,9 @@ public class SignUpRequest {
         return "SignUpRequest{" +
                 "userId='" + userId + '\'' +
                 ", email='" + email + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", phone='" + phone + '\'' +
+                ", name='" + name + '\'' +
+                ", family_name='" + family_name + '\'' +
+                ", phone_number='" + phone_number + '\'' +
                 ", address='" + address + '\'' +
                 ", active=" + active +
                 '}';
