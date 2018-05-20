@@ -1,4 +1,5 @@
 **/*.idea
 **/target
 **/*.iml
+SingInAuthorizer/target/*
 **/.DS_Store
