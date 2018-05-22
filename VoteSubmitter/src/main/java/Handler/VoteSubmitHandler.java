@@ -27,7 +27,7 @@ public class VoteSubmitHandler implements RequestHandler<VoteRequest, VoteSubmit
             this.initDynamoDbClient();
             if(voteRequest.getVotersId() != null){
                 if(voteRequest.getVotersId().contains(voteRequest.getVoterId())){
-                    throw new VoteAlreadyExistException("You have already voted for "+voteRequest.getTigrinyaWord());
+                    throw new VoteAlreadyExistException("ናይ "+voteRequest.getTigrinyaWord()+" ምርጫ ኣቀዲሙ ተረኪቡ አዩ።");
                 }
                 voteRequest.getVotersId().add(voteRequest.getVoterId());
             }else {
@@ -46,7 +46,7 @@ public class VoteSubmitHandler implements RequestHandler<VoteRequest, VoteSubmit
             e.printStackTrace();
             return new VoteSubmitterResponse("Server Exception","500");
         }
-        return new VoteSubmitterResponse("Thanks! You have successfully voted for: "+ voteRequest.getTigrinyaWord(),"201");
+        return new VoteSubmitterResponse(voteRequest.getTigrinyaWord()+" ዕዉት ምርጫ፣ ተሳትፎኩም ነመስግን።: ","201");
     }
 
     private static void insertOrUpdateVote(VoteRequest voteRequest) {
