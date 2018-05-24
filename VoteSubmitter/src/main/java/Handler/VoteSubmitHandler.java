@@ -7,6 +7,8 @@ import com.amazonaws.regions.Regions;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
+import com.amazonaws.services.dynamodbv2.datamodeling.PaginatedScanList;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import java.util.HashSet;
@@ -50,6 +52,8 @@ public class VoteSubmitHandler implements RequestHandler<VoteRequest, VoteSubmit
     }
 
     private static void insertOrUpdateVote(VoteRequest voteRequest) {
+        PaginatedScanList<VoteRequest> voteTable = dynamoDbMapper.scan(VoteRequest.class,new DynamoDBScanExpression());
+        System.out.println("dynamoDb Item size*********: "+ voteTable.size());
         dynamoDbMapper.save(voteRequest);
     }
 
