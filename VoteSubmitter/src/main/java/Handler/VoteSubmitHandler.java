@@ -46,7 +46,7 @@ public class VoteSubmitHandler implements RequestHandler<VoteRequest, VoteSubmit
             e.printStackTrace();
             return new VoteSubmitterResponse("Server Exception","500");
         }
-        return new VoteSubmitterResponse(voteRequest.getTigrinyaWord()+" ዕዉት ምርጫ፣ ተሳትፎኩም ነመስግን።: ","201");
+        return new VoteSubmitterResponse("ናይ "+voteRequest.getTigrinyaWord()+" ዕዉት ምርጫ፣ ተሳትፎኩም ነመስግን።: ","201");
     }
 
     private static void insertOrUpdateVote(VoteRequest voteRequest) {
