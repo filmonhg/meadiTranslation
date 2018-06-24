@@ -21,7 +21,7 @@ import java.util.TimeZone;
 public class SubmitWordTranslation implements RequestHandler<WordTranslateRequest,WordTranslateResponse> {
 
         private DynamoDB dynamoDb;
-        private String DYNAMODB_TABLE_NAME = "tigrinya_translates";
+        private String DYNAMODB_TABLE_NAME = "tigrigna_translate_vote";
         private Regions REGION = Regions.US_WEST_2;
 
 
@@ -33,7 +33,7 @@ public class SubmitWordTranslation implements RequestHandler<WordTranslateReques
             persistData(wordTranslateRequest);
 
             WordTranslateResponse wordTranslateResponse = new WordTranslateResponse();
-            wordTranslateResponse.setMessage("Saved translated word Successfully!!!");
+            wordTranslateResponse.setMessage("Saved translated word Successfully!");
             return wordTranslateResponse;
         }
 
@@ -42,9 +42,9 @@ public class SubmitWordTranslation implements RequestHandler<WordTranslateReques
             return this.dynamoDb.getTable(DYNAMODB_TABLE_NAME)
                     .putItem(
                             new PutItemSpec().withItem(new Item()
-                                    .withString("englishWord",wordTranslateRequest.getEnglishWord())
                                     .withString("tigrinyaWord",wordTranslateRequest.getTigrinyaWord())
-                                    .withString("timestamp", getCurrentTimeISO8601())
+                                    .withString("englishWord",wordTranslateRequest.getEnglishWord())
+                                    //.withString("timestamp", getCurrentTimeISO8601())
                                     .withString("contributerId",wordTranslateRequest.getContributerId())
                             ));
 

@@ -67,7 +67,7 @@ public class TWordDetailsHandler implements RequestHandler<TWordDetailsRequest,T
     private List<TranslateResponse> queryTranslated(String englishWord)
     {
         List<TranslateResponse> translateResponses = new ArrayList<TranslateResponse> ();
-        Table table = this.dynamoDb.getTable("tigrinya_translates");
+        Table table = this.dynamoDb.getTable("tigrigna_translate_vote");
 
         QuerySpec spec = new QuerySpec()
                 .withKeyConditionExpression("englishWord = :engl_word")
@@ -84,12 +84,16 @@ public class TWordDetailsHandler implements RequestHandler<TWordDetailsRequest,T
             TranslateResponse translateResponse = new TranslateResponse();
             translateResponse.setTigrinyaWord(item.getString("tigrinyaWord"));
             translateResponse.setContributorId(queryUser(item.getString("contributerId")));
-            translateResponse.setVotesResponse(queryVotes(item.getString("tigrinyaWord")));
+            translateResponse.setVoteCount(item.getInt("voteCount"));
+            translateResponse.setVotersMap(queryVoterUsers(item.getStringSet("votersId")));
+            //translateResponse.setVotesResponse(queryVotes(item.getString("tigrinyaWord")));
             translateResponses.add(translateResponse);
         }
 
         return translateResponses;
     }
+
+
 
     private VotesResponse queryVotes(String tigrinyaWord)
     {

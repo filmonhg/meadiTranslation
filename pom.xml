@@ -20,6 +20,9 @@
         <module>VoteSubmitter</module>
         <module>MeadiParent</module>
         <module>SignUpLambda</module>
+        <module>words</module>
+        <module>populatePage</module>
+        <module>SubmitWordVote</module>
     </modules>
 
 </project>
