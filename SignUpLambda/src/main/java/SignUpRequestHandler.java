@@ -30,7 +30,10 @@ public class SignUpRequestHandler implements RequestHandler<SignUpDetails,SignUp
         return this.dynamoDb.getTable(DYNAMODB_TABLE_NAME)
                 .putItem(
                         new PutItemSpec().withItem(new Item()
-                                .withString("userId",signUpDetails.getRequest().getUserAttributes().getPhone_number())
+                                .withString("userId",signUpDetails.getRequest().getUserAttributes().getEmail()+"|"+
+                                        signUpDetails.getRequest().getUserAttributes().getName() + " " +
+                                        signUpDetails.getRequest().getUserAttributes().getFamily_name()
+                                )
                                 .withString("email",signUpDetails.getRequest().getUserAttributes().getEmail())
                                 .withString("firstName", signUpDetails.getRequest().getUserAttributes().getName())
                                 .withString("lastName",signUpDetails.getRequest().getUserAttributes().getFamily_name())
