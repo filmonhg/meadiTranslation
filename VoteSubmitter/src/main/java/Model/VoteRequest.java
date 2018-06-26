@@ -7,7 +7,7 @@ import java.util.Set;
 /**
  * Created by Stella on 5/13/18.
  */
-@DynamoDBTable(tableName="tigrinya_votes")
+@DynamoDBTable(tableName="tigrinya_translate_vote")
 public class VoteRequest {
 
     private String tigrinyaWord;
