@@ -17,7 +17,13 @@ public class VoteRequest {
     private Set<String> votersId;
     private String voterId;
 
-    @DynamoDBHashKey(attributeName="tigrinyaWord")
+    @DynamoDBHashKey(attributeName="englishWord")
+    public String getEnglishWord() { return englishWord; }
+    public void setEnglishWord(String englishWord) {
+        this.englishWord = englishWord;
+    }
+
+    @DynamoDBRangeKey(attributeName="tigrinyaWord")
     public String getTigrinyaWord() { return tigrinyaWord; }
     public void setTigrinyaWord(String tigrinyaWord) {
         this.tigrinyaWord = tigrinyaWord;
@@ -27,12 +33,6 @@ public class VoteRequest {
     public int getVoteCount() { return voteCount; }
     public void setVoteCount(int voteCount) {
         this.voteCount = voteCount;
-    }
-
-    @DynamoDBAttribute(attributeName="englishWord")
-    public String getEnglishWord() { return englishWord; }
-    public void setEnglishWord(String englishWord) {
-        this.englishWord = englishWord;
     }
 
     @DynamoDBAttribute(attributeName="contributorId")
