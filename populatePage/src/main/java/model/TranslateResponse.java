@@ -1,13 +1,15 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class TranslateResponse {
     private String tigrinyaWord;
     private String contributorId;
     private Integer voteCount;
-    private Map<String,String> votersMap = new HashMap<>();
+    private List<String> votersList = new ArrayList<>();
     //private VotesResponse votesResponse;
 
     public String getTigrinyaWord() {
@@ -34,12 +36,12 @@ public class TranslateResponse {
         this.voteCount = voteCount;
     }
 
-    public Map<String, String> getVotersMap() {
-        return votersMap;
+    public List<String> getVotersList() {
+        return votersList;
     }
 
-    public void setVotersMap(Map<String, String> votersMap) {
-        this.votersMap = votersMap;
+    public void setVotersList(List<String> votersList) {
+        this.votersList = votersList;
     }
 /*
     public VotesResponse getVotesResponse() {

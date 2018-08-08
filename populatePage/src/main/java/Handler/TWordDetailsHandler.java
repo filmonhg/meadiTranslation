@@ -11,7 +11,6 @@ import com.amazonaws.services.lambda.runtime.RequestHandler;
 import model.TranslateResponse;
 import model.VotesResponse;
 import model.WordResponse;
-
 import java.io.IOException;
 import java.util.*;
 
@@ -19,23 +18,24 @@ public class TWordDetailsHandler implements RequestHandler<TWordDetailsRequest,T
 
     private DynamoDB dynamoDb;
     private Regions REGION = Regions.US_WEST_2;
-    private TWordDetailsResponse tWordDetailsResponse = new TWordDetailsResponse();
 
     public TWordDetailsResponse handleRequest(TWordDetailsRequest tWordDetailsRequest, Context context) {
-
+        TWordDetailsResponse tWordDetailsResponse = new TWordDetailsResponse();
         this.initDynamoDbClient();
 
         try {
-            queryTable(tWordDetailsRequest.getEntryKey(), tWordDetailsRequest.getWordId());
+            tWordDetailsResponse= queryTable(tWordDetailsRequest.getEntryKey(), tWordDetailsRequest.getWordId(), tWordDetailsResponse);
+
         }
         catch (Exception ex)
         {
             ex.printStackTrace();
         }
+
         return tWordDetailsResponse;
     }
 
-    public TWordDetailsResponse queryTable(String entryKey, Integer startId) throws IOException {
+    public TWordDetailsResponse queryTable(String entryKey, Integer startId,TWordDetailsResponse tWordDetailsResponse) throws IOException {
         Integer lastId=startId+4;
         Table table = this.dynamoDb.getTable("words_table");
         QuerySpec spec = new QuerySpec()
@@ -67,7 +67,7 @@ public class TWordDetailsHandler implements RequestHandler<TWordDetailsRequest,T
     private List<TranslateResponse> queryTranslated(String englishWord)
     {
         List<TranslateResponse> translateResponses = new ArrayList<TranslateResponse> ();
-        Table table = this.dynamoDb.getTable("tigrigna_translate_vote");
+        Table table = this.dynamoDb.getTable("tigrinya_translate_vote");
 
         QuerySpec spec = new QuerySpec()
                 .withKeyConditionExpression("englishWord = :engl_word")
@@ -80,12 +80,12 @@ public class TWordDetailsHandler implements RequestHandler<TWordDetailsRequest,T
         while(iterator.hasNext())
         {
             item=iterator.next();
-            System.out.println(item.toJSONPretty());
+            //System.out.println(item.toJSONPretty());
             TranslateResponse translateResponse = new TranslateResponse();
             translateResponse.setTigrinyaWord(item.getString("tigrinyaWord"));
-            translateResponse.setContributorId(queryUser(item.getString("contributerId")));
+            translateResponse.setContributorId(item.getString("contributorId"));
             translateResponse.setVoteCount(item.getInt("voteCount"));
-            translateResponse.setVotersMap(queryVoterUsers(item.getStringSet("votersId")));
+            translateResponse.setVotersList(queryVotersUsers(item.getStringSet("votersId")));
             //translateResponse.setVotesResponse(queryVotes(item.getString("tigrinyaWord")));
             translateResponses.add(translateResponse);
         }
@@ -111,7 +111,7 @@ public class TWordDetailsHandler implements RequestHandler<TWordDetailsRequest,T
         while(iterator.hasNext()) {
             item = iterator.next();
             votesResponse.setVoteCount(item.getInt("voteCount"));
-            votesResponse.setVotersMap(queryVoterUsers(item.getStringSet("votersId")));
+            votesResponse.setVotersList(queryVotersUsers(item.getStringSet("votersId")));
         }
         return votesResponse;
     }
@@ -134,15 +134,15 @@ public class TWordDetailsHandler implements RequestHandler<TWordDetailsRequest,T
         return fullName;
     }
 
-    private Map<String,String> queryVoterUsers(Set<String> voters)
-    {
-        Map<String,String> votersMap= new HashMap<>();
+
+    private List<String> queryVotersUsers(Set<String> voters){
+        List<String> votersList= new ArrayList<>();
         for(String s: voters)
         {
-            votersMap.put(s,queryUser(s));
-
+            //votersList.add(s+"|"+queryUser(s));
+            votersList.add(s);
         }
-        return votersMap;
+        return votersList;
     }
 
     private void initDynamoDbClient() {

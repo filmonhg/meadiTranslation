@@ -11,7 +11,7 @@ import com.amazonaws.services.lambda.runtime.RequestHandler;
 
 public class SubmitWordVote implements RequestHandler<WordVoteRequest,WordVoteResponse> {
     private DynamoDB dynamoDb;
-    private String DYNAMODB_TABLE_NAME = "tigrigna_translate_vote";
+    private String DYNAMODB_TABLE_NAME = "tigrinya_translate_vote";
     private Regions REGION = Regions.US_WEST_2;
 
 
@@ -40,7 +40,7 @@ public class SubmitWordVote implements RequestHandler<WordVoteRequest,WordVoteRe
                         new PutItemSpec().withItem(new Item()
                                 .withString("tigrinyaWord",wordVoteRequest.getTigrinyaWord())
                                 .withString("englishWord",wordVoteRequest.getEnglishWord())
-                                .withString("contributerId",wordVoteRequest.getContributorId())
+                                .withString("contributorId",wordVoteRequest.getContributorId())
                                 .withInt("voteCount",wordVoteRequest.getVoteCount())
                                 .withStringSet("votersId",wordVoteRequest.getVotersId())
                         ));

@@ -1,13 +1,11 @@
 package model;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class VotesResponse {
     //private Set<String> votersId;
     private Integer voteCount;
-    private Map<String,String> votersMap = new HashMap<>();
+    private List<String> votersList = new ArrayList<>();
 
     /*public Set<String> getVotersId() {
         return votersId;
@@ -26,19 +24,19 @@ public class VotesResponse {
         this.voteCount = voteCount;
     }
 
-    public Map<String, String> getVotersMap() {
-        return votersMap;
+    public List<String> getVotersList() {
+        return votersList;
     }
 
-    public void setVotersMap(Map<String, String> votersMap) {
-        this.votersMap = votersMap;
+    public void setVotersList(List<String> votersList) {
+        this.votersList = votersList;
     }
 
     @Override
     public String toString() {
         return "VotesResponse{" +
                 "voteCount=" + voteCount +
-                ", votersMap=" + votersMap +
+                ", votersList=" + votersList +
                 '}';
     }
 }
