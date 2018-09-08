@@ -24,7 +24,11 @@ public class TWordDetailsHandler implements RequestHandler<TWordDetailsRequest,T
         this.initDynamoDbClient();
 
         try {
-            tWordDetailsResponse= queryTable(tWordDetailsRequest.getEntryKey(), tWordDetailsRequest.getWordId(), tWordDetailsResponse);
+            System.out.println("default value of word id : "+tWordDetailsRequest.getWordId());
+            if(tWordDetailsRequest.getWordId()==null)
+                tWordDetailsResponse= queryTable(tWordDetailsRequest.getEntryKey(), tWordDetailsResponse);
+            else
+                tWordDetailsResponse= queryTable(tWordDetailsRequest.getEntryKey(), tWordDetailsRequest.getWordId(), tWordDetailsResponse);
 
         }
         catch (Exception ex)
@@ -44,6 +48,35 @@ public class TWordDetailsHandler implements RequestHandler<TWordDetailsRequest,T
                 .withValueMap(new ValueMap()
                         .withInt(":w_id_1", startId)
                         .withInt(":w_id_2",lastId)
+                        .withString(":ek",entryKey));
+
+
+        ItemCollection<QueryOutcome> items = table.query(spec);
+        Iterator<Item> iterator = items.iterator();
+        Item item = null;
+        while (iterator.hasNext()) {
+            WordResponse wordResponse = new WordResponse();
+            item = iterator.next();
+            System.out.println(item.get("word"));
+            System.out.println(item.toJSONPretty());
+            wordResponse.setWord(item.getString("word"));
+            wordResponse.setWordId(item.getString("wordId"));
+            wordResponse.setTranslationResponses(queryTranslated(item.getString("word")));
+            tWordDetailsResponse.addItem(wordResponse);
+
+        }
+        return tWordDetailsResponse;
+    }
+
+    public TWordDetailsResponse queryTable(String entryKey, TWordDetailsResponse tWordDetailsResponse) throws IOException {
+        //Integer lastId=startId+4;
+        Table table = this.dynamoDb.getTable("words_table");
+        QuerySpec spec = new QuerySpec()
+                .withKeyConditionExpression("entryKey = :ek")
+                .withMaxResultSize(3)
+                .withValueMap(new ValueMap()
+                        //.withInt(":w_id_1", startId)
+                        //.withInt(":w_id_2",lastId)
                         .withString(":ek",entryKey));
 
 
