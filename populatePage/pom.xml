@@ -29,6 +29,15 @@
             <groupId>com.amazonaws</groupId>
             <artifactId>aws-java-sdk-dynamodb</artifactId>
         </dependency>
+        <dependency>
+            <groupId>Meadi</groupId>
+            <artifactId>MeadiConstants</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>Meadi</groupId>
+            <artifactId>MeadiConstants</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 
     <build>

@@ -8,9 +8,8 @@ import com.amazonaws.services.dynamodbv2.document.spec.QuerySpec;
 import com.amazonaws.services.dynamodbv2.document.utils.ValueMap;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
-import model.TranslateResponse;
-import model.VotesResponse;
-import model.WordResponse;
+import model.*;
+
 import java.io.IOException;
 import java.util.*;
 
@@ -19,16 +18,20 @@ public class TWordDetailsHandler implements RequestHandler<TWordDetailsRequest,T
     private DynamoDB dynamoDb;
     private Regions REGION = Regions.US_WEST_2;
 
+
     public TWordDetailsResponse handleRequest(TWordDetailsRequest tWordDetailsRequest, Context context) {
         TWordDetailsResponse tWordDetailsResponse = new TWordDetailsResponse();
         this.initDynamoDbClient();
+        TableDetails tableDetails=  TranslationConstants.languageInfo.get(tWordDetailsRequest.getLanguage());
+
+
 
         try {
             System.out.println("default value of word id : "+tWordDetailsRequest.getWordId());
             if(tWordDetailsRequest.getWordId()==null)
-                tWordDetailsResponse= queryTable(tWordDetailsRequest.getEntryKey(), tWordDetailsResponse);
+                tWordDetailsResponse= queryTable(tWordDetailsRequest.getEntryKey(), tWordDetailsResponse,tableDetails);
             else
-                tWordDetailsResponse= queryTable(tWordDetailsRequest.getEntryKey(), tWordDetailsRequest.getWordId(), tWordDetailsResponse);
+                tWordDetailsResponse= queryTable(tWordDetailsRequest.getEntryKey(), tWordDetailsRequest.getWordId(), tWordDetailsResponse,tableDetails);
 
         }
         catch (Exception ex)
@@ -39,7 +42,7 @@ public class TWordDetailsHandler implements RequestHandler<TWordDetailsRequest,T
         return tWordDetailsResponse;
     }
 
-    public TWordDetailsResponse queryTable(String entryKey, Integer startId,TWordDetailsResponse tWordDetailsResponse) throws IOException {
+    public TWordDetailsResponse queryTable(String entryKey, Integer startId,TWordDetailsResponse tWordDetailsResponse,TableDetails tableDetails) throws IOException {
         Integer lastId=startId+4;
         Table table = this.dynamoDb.getTable("words_table");
         QuerySpec spec = new QuerySpec()
@@ -61,14 +64,14 @@ public class TWordDetailsHandler implements RequestHandler<TWordDetailsRequest,T
             System.out.println(item.toJSONPretty());
             wordResponse.setWord(item.getString("word"));
             wordResponse.setWordId(item.getString("wordId"));
-            wordResponse.setTranslationResponses(queryTranslated(item.getString("word")));
+            wordResponse.setTranslationResponses(queryTranslated(item.getString("word"),tableDetails));
             tWordDetailsResponse.addItem(wordResponse);
 
         }
         return tWordDetailsResponse;
     }
 
-    public TWordDetailsResponse queryTable(String entryKey, TWordDetailsResponse tWordDetailsResponse) throws IOException {
+    public TWordDetailsResponse queryTable(String entryKey, TWordDetailsResponse tWordDetailsResponse,TableDetails tableDetails) throws IOException {
         //Integer lastId=startId+4;
         Table table = this.dynamoDb.getTable("words_table");
         QuerySpec spec = new QuerySpec()
@@ -90,17 +93,17 @@ public class TWordDetailsHandler implements RequestHandler<TWordDetailsRequest,T
             System.out.println(item.toJSONPretty());
             wordResponse.setWord(item.getString("word"));
             wordResponse.setWordId(item.getString("wordId"));
-            wordResponse.setTranslationResponses(queryTranslated(item.getString("word")));
+            wordResponse.setTranslationResponses(queryTranslated(item.getString("word"),tableDetails));
             tWordDetailsResponse.addItem(wordResponse);
 
         }
         return tWordDetailsResponse;
     }
 
-    private List<TranslateResponse> queryTranslated(String englishWord)
+    private List<TranslateResponse> queryTranslated(String englishWord,TableDetails tableDetails)
     {
         List<TranslateResponse> translateResponses = new ArrayList<TranslateResponse> ();
-        Table table = this.dynamoDb.getTable("tigrinya_translate_vote");
+        Table table = this.dynamoDb.getTable(tableDetails.getTableName());
 
         QuerySpec spec = new QuerySpec()
                 .withKeyConditionExpression("englishWord = :engl_word")
@@ -115,7 +118,7 @@ public class TWordDetailsHandler implements RequestHandler<TWordDetailsRequest,T
             item=iterator.next();
             //System.out.println(item.toJSONPretty());
             TranslateResponse translateResponse = new TranslateResponse();
-            translateResponse.setTigrinyaWord(item.getString("tigrinyaWord"));
+            translateResponse.setTranslatedWord(item.getString(tableDetails.getColumnName()));
             translateResponse.setContributorId(item.getString("contributorId"));
             translateResponse.setVoteCount(item.getInt("voteCount"));
             translateResponse.setVotersList(queryVotersUsers(item.getStringSet("votersId")));

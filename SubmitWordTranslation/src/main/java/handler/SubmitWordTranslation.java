@@ -21,31 +21,35 @@ import model.*;
 public class SubmitWordTranslation implements RequestHandler<WordTranslateRequest, WordTranslateResponse> {
 
         private DynamoDB dynamoDb;
-        private String DYNAMODB_TABLE_NAME = "tigrinya_translate_vote";
+        //private String DYNAMODB_TABLE_NAME = "tigrinya_translate_vote";
         private Regions REGION = Regions.US_WEST_2;
-
+        //private HashMap<String,String> tableDetails = new HashMap<>();
 
 
         public WordTranslateResponse handleRequest(WordTranslateRequest wordTranslateRequest, Context context) {
-
+            System.out.println("language : "+wordTranslateRequest.getLanguage());
+            TableDetails tableDetails =TranslationConstants.languageInfo.get("tigrinya");
+            //System.out.println("table Name : "+ TranslationConstants.languageInfo.get("tigrinya").toString());
             this.initDynamoDbClient();
 
-            persistData(wordTranslateRequest);
+
+            persistData(wordTranslateRequest,tableDetails);
 
             WordTranslateResponse wordTranslateResponse = new WordTranslateResponse();
             wordTranslateResponse.setMessage("Saved translated word Successfully!");
             return wordTranslateResponse;
         }
 
-        private PutItemOutcome persistData(WordTranslateRequest wordTranslateRequest)
+        private PutItemOutcome persistData(WordTranslateRequest wordTranslateRequest, TableDetails tableDetails)
                 throws ConditionalCheckFailedException {
-
+            System.out.println("table name : " + tableDetails.getTableName());
+            System.out.println("Column Name : "+ tableDetails.getColumnName());
             Set<String> initialVotersSet = new HashSet<>();
             initialVotersSet.add("XXX");
-            return this.dynamoDb.getTable(DYNAMODB_TABLE_NAME)
+            return this.dynamoDb.getTable(tableDetails.getTableName())
                     .putItem(
                             new PutItemSpec().withItem(new Item()
-                                    .withString("tigrinyaWord",wordTranslateRequest.getTigrinyaWord())
+                                    .withString(tableDetails.getColumnName(),wordTranslateRequest.getTranslatedWord())
                                     .withString("englishWord",wordTranslateRequest.getEnglishWord())
                                     //.withString("timestamp", getCurrentTimeISO8601())
                                     .withString("contributorId",wordTranslateRequest.getContributorId())

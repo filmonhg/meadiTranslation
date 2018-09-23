@@ -8,6 +8,8 @@ public class TWordDetailsRequest {
 
     private String word;
 
+    private String language;
+
     public String getEntryKey() {
         return entryKey;
     }
@@ -30,5 +32,13 @@ public class TWordDetailsRequest {
 
     public void setWord(String word) {
         this.word = word;
+    }
+
+    public String getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
     }
 }

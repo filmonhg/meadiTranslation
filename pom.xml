@@ -23,6 +23,7 @@
         <module>words</module>
         <module>populatePage</module>
         <module>SubmitWordVote</module>
+        <module>MeadiConstants</module>
     </modules>
 
 </project>

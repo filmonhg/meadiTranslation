@@ -1,23 +1,21 @@
 package model;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class TranslateResponse {
-    private String tigrinyaWord;
+    private String translatedWord;
     private String contributorId;
     private Integer voteCount;
     private List<String> votersList = new ArrayList<>();
     //private VotesResponse votesResponse;
 
-    public String getTigrinyaWord() {
-        return tigrinyaWord;
+    public String getTranslatedWord() {
+        return translatedWord;
     }
 
-    public void setTigrinyaWord(String tigrinyaWord) {
-        this.tigrinyaWord = tigrinyaWord;
+    public void setTranslatedWord(String translatedWord) {
+        this.translatedWord = translatedWord;
     }
 
     public String getContributorId() {
