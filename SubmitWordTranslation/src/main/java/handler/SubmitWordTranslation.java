@@ -28,7 +28,7 @@ public class SubmitWordTranslation implements RequestHandler<WordTranslateReques
 
         public WordTranslateResponse handleRequest(WordTranslateRequest wordTranslateRequest, Context context) {
             System.out.println("language : "+wordTranslateRequest.getLanguage());
-            TableDetails tableDetails =TranslationConstants.languageInfo.get("tigrinya");
+            TableDetails tableDetails =TranslationConstants.languageInfo.get(wordTranslateRequest.getLanguage());
             //System.out.println("table Name : "+ TranslationConstants.languageInfo.get("tigrinya").toString());
             this.initDynamoDbClient();
 
