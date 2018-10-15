@@ -10,12 +10,17 @@ import java.util.Set;
 @DynamoDBTable(tableName="tigrinya_translate_vote")
 public class VoteRequest {
 
-    private String tigrinyaWord;
-    private int voteCount;
     private String englishWord;
+    private String translatedWord;
+    private int voteCount;
     private String contributorId;
     private Set<String> votersId;
     private String voterId;
+    private String language;
+
+    @DynamoDBIgnore
+    public String getLanguage() { return language; }
+    public void setLanguage(String language) { this.language = language; }
 
     @DynamoDBHashKey(attributeName="englishWord")
     public String getEnglishWord() { return englishWord; }
@@ -23,10 +28,10 @@ public class VoteRequest {
         this.englishWord = englishWord;
     }
 
-    @DynamoDBRangeKey(attributeName="tigrinyaWord")
-    public String getTigrinyaWord() { return tigrinyaWord; }
-    public void setTigrinyaWord(String tigrinyaWord) {
-        this.tigrinyaWord = tigrinyaWord;
+    @DynamoDBRangeKey(attributeName="translatedWord")
+    public String getTranslatedWord() { return translatedWord; }
+    public void setTranslatedWord(String tigrinyaWord) {
+        this.translatedWord = tigrinyaWord;
     }
 
     @DynamoDBAttribute(attributeName="voteCount")
@@ -51,5 +56,18 @@ public class VoteRequest {
     public String getVoterId() { return voterId; }
     public void setVoterId(String voterId) {
         this.voterId = voterId;
+    }
+
+    @Override
+    public String toString() {
+        return "VoteRequest{" +
+                "englishWord='" + englishWord + '\'' +
+                ", translatedWord='" + translatedWord + '\'' +
+                ", voteCount=" + voteCount +
+                ", contributorId='" + contributorId + '\'' +
+                ", votersId=" + votersId +
+                ", voterId='" + voterId + '\'' +
+                ", language='" + language + '\'' +
+                '}';
     }
 }

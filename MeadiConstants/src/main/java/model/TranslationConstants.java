@@ -9,9 +9,9 @@ import java.util.Map;
 public class TranslationConstants {
 
     public static final Map<String,TableDetails> languageInfo = new HashMap<String,TableDetails>();
-    private static final String Tigrinya="{\"tableName\":\"tigrinya_translate_vote\",\"columnName\":\"tigrinyaWord\"}";
-    private static final String Tigre="{\"tableName\":\"tigre_translate_vote\",\"columnName\":\"tigreWord\"}";
-    private static final String Bilen="{\"tableName\":\"bilen_translate_vote\",\"columnName\":\"bilenWord\"}";
+    private static final String Tigrinya="{\"tableName\":\"tigrinya_translate_vote\",\"columnName\":\"translatedWord\"}";
+    private static final String Tigre="{\"tableName\":\"tigre_translate_vote\",\"columnName\":\"translatedWord\"}";
+    private static final String Bilen="{\"tableName\":\"bilen_translate_vote\",\"columnName\":\"translatedWord\"}";
 
     static {
             ObjectMapper mapper = new ObjectMapper();
